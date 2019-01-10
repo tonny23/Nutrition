@@ -120,17 +120,23 @@ public class NutritionActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             Log.e(TAG, "onOptionsItemSelected: " + getIntent().getAction());
-            if (getIntent().getAction() != null){
-                switch (getIntent().getAction()) {
-                    case (Intent.ACTION_MAIN):
-                        startActivity(new Intent(this, MainActivity.class));
-                        break;
-                    case (Intent.ACTION_SEARCH):
-                        startActivity(new Intent(this, SearchHistoryActivity.class));
-                        break;
-                }
-            }
+            onBackPressed();
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onBackPressed() {
+        if (getIntent().getAction() != null){
+            switch (getIntent().getAction()) {
+                case (Intent.ACTION_MAIN):
+                    startActivity(new Intent(this, MainActivity.class));
+                    break;
+                case (Intent.ACTION_SEARCH):
+                    startActivity(new Intent(this, SearchHistoryActivity.class));
+                    break;
+            }
+        }
+    }
+
 }
