@@ -3,50 +3,42 @@ package com.example.nutritions.data.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "nutrition")
-public class Nutrition implements Parcelable {
+@Entity(tableName = "food")
+public class Food implements Parcelable {
 
-    @PrimaryKey(autoGenerate = true)
-    private int id;
+    @PrimaryKey
+    @NonNull
     @ColumnInfo(name = "name")
     private String name;
 
-    public Nutrition() {
+    public Food() {
 
     }
 
-    public Nutrition(String name) {
+    public Food(@NonNull String name) {
         this.name = name;
     }
 
-    protected Nutrition(Parcel in) {
-        id = in.readInt();
+    protected Food(Parcel in) {
         name = in.readString();
     }
 
-    public static final Creator<Nutrition> CREATOR = new Creator<Nutrition>() {
+    public static final Creator<Food> CREATOR = new Creator<Food>() {
         @Override
-        public Nutrition createFromParcel(Parcel in) {
-            return new Nutrition(in);
+        public Food createFromParcel(Parcel in) {
+            return new Food(in);
         }
 
         @Override
-        public Nutrition[] newArray(int size) {
-            return new Nutrition[size];
+        public Food[] newArray(int size) {
+            return new Food[size];
         }
     };
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -63,7 +55,6 @@ public class Nutrition implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
         dest.writeString(name);
     }
 }

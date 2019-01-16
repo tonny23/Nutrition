@@ -3,7 +3,7 @@ package com.example.nutritions.data.db;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.example.nutritions.data.model.Nutrition;
+import com.example.nutritions.data.model.Food;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
@@ -11,10 +11,10 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {Nutrition.class}, version = 1)
+@Database(entities = {Food.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
 
-    public abstract NutritionDao nutritionDao();
+    public abstract FoodDao nutritionDao();
     private static AppDatabase INSTANCE;
 
     static AppDatabase getDatabase(final Context context) {
@@ -22,7 +22,7 @@ public abstract class AppDatabase extends RoomDatabase {
             synchronized (AppDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            AppDatabase.class, "nutrition_database")
+                            AppDatabase.class, "food_database")
                             // Wipes and rebuilds instead of migrating
                             // if no Migration object.
                             // Migration is not part of this practical.
@@ -49,7 +49,7 @@ public abstract class AppDatabase extends RoomDatabase {
      */
     private static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
 
-        private final NutritionDao mDao;
+        private final FoodDao mDao;
         String[] foods = {"apple", "donut", "beer"};
 
         PopulateDbAsync(AppDatabase db) {
@@ -64,8 +64,8 @@ public abstract class AppDatabase extends RoomDatabase {
             mDao.deleteAll();
 
             for (int i = 0; i <= foods.length - 1; i++) {
-                Nutrition nutrition = new Nutrition(foods[i]);
-                mDao.insert(nutrition);
+                Food food = new Food(foods[i]);
+                mDao.insert(food);
             }
             return null;
         }

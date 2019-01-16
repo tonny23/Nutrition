@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.nutritions.R;
-import com.example.nutritions.data.model.Nutrition;
+import com.example.nutritions.data.model.Food;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdapter.SearchHistoryHolder> {
 
     private final LayoutInflater mInflater;
-    private List<Nutrition> mNutritions;
+    private List<Food> mFoods;
     private ItemClickListener mItemClickListener;
 
     public SearchHistoryAdapter(Context context, SearchHistoryAdapter.ItemClickListener clickListener) {
@@ -35,24 +35,24 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdap
 
     @Override
     public void onBindViewHolder(SearchHistoryHolder holder, int position) {
-        if (mNutritions != null) {
-            Nutrition current = mNutritions.get(position);
+        if (mFoods != null) {
+            Food current = mFoods.get(position);
             holder.btnFood.setText(current.getName());
             holder.btnFood.setOnClickListener(view -> mItemClickListener.onItemClick(position));
         }
     }
 
-    public void setNutritions(List<Nutrition> nutritions){
-        mNutritions = nutritions;
+    public void setFoods(List<Food> foods){
+        mFoods = foods;
         notifyDataSetChanged();
     }
 
     // getItemCount() is called many times, and when it is first called,
-    // mNutritions has not been updated (means initially, it's null, and we can't return null).
+    // mFoods has not been updated (means initially, it's null, and we can't return null).
     @Override
     public int getItemCount() {
-        if (mNutritions != null)
-            return mNutritions.size();
+        if (mFoods != null)
+            return mFoods.size();
         else return 0;
     }
 

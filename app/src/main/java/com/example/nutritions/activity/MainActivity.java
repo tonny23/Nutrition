@@ -91,8 +91,9 @@ public class MainActivity extends AppCompatActivity {
                                     mLottieAnimationView.setVisibility(View.INVISIBLE);
                                 }
                         ),
-                code -> Log.e(TAG, "Error code: " + code + ". Error msg: "),
+                code -> Log.e(TAG, "Error code: " + code),
                 e -> {
+                    Log.e(TAG, "Exception: " + e.getMessage());
                     throw new ClarifaiException(e);
                 }
         );

@@ -16,8 +16,8 @@ import android.view.WindowManager;
 import com.example.nutritions.R;
 import com.example.nutritions.activity.NutritionActivity;
 import com.example.nutritions.adapter.FoodItemAdapter;
-import com.example.nutritions.data.model.Nutrition;
-import com.example.nutritions.data.model.NutritionViewModel;
+import com.example.nutritions.data.model.Food;
+import com.example.nutritions.data.model.FoodViewModel;
 
 import java.util.ArrayList;
 
@@ -38,7 +38,7 @@ public class FoodListFragment extends DialogFragment implements FoodItemAdapter.
     private ArrayList<String> foodList;
     private FoodItemAdapter mFoodItemAdapter;
     private RecyclerView mRecyclerView;
-    private NutritionViewModel mNutritionViewModel;
+    private FoodViewModel mFoodViewModel;
     public static final double DIALOG_HEIGHT = 0.4;
 
     private static final String TAG = "FoodListFragment";
@@ -78,7 +78,7 @@ public class FoodListFragment extends DialogFragment implements FoodItemAdapter.
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
 
-        mNutritionViewModel = ViewModelProviders.of(this).get(NutritionViewModel.class);
+        mFoodViewModel = ViewModelProviders.of(this).get(FoodViewModel.class);
 
         mRecyclerView = view.findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -92,7 +92,7 @@ public class FoodListFragment extends DialogFragment implements FoodItemAdapter.
         Intent nutrition = new Intent(getActivity(), NutritionActivity.class);
         nutrition.setAction(Intent.ACTION_MAIN);
         nutrition.putExtra(ARG_NAME, foodList.get(position));
-        mNutritionViewModel.insert(new Nutrition(foodList.get(position)));
+        mFoodViewModel.insert(new Food(foodList.get(position)));
         startActivity(nutrition);
     }
 

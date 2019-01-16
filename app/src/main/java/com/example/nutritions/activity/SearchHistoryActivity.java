@@ -10,9 +10,10 @@ import android.widget.TextView;
 
 import com.example.nutritions.R;
 import com.example.nutritions.adapter.SearchHistoryAdapter;
-import com.example.nutritions.data.model.Nutrition;
-import com.example.nutritions.data.model.NutritionViewModel;
+import com.example.nutritions.data.model.Food;
+import com.example.nutritions.data.model.FoodViewModel;
 
+import java.util.Collections;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,9 +23,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class SearchHistoryActivity extends AppCompatActivity implements SearchHistoryAdapter.ItemClickListener {
 
-    private NutritionViewModel mNutritionViewModel;
+    private FoodViewModel mFoodViewModel;
     private TextView tvNoHistory;
-    private List<Nutrition> mNutritionList;
+    private List<Food> mFoodList;
     public static final String ARG_NAME = "name";
     private static final String TAG = "SearchHistoryActivity";
 
@@ -42,12 +43,14 @@ public class SearchHistoryActivity extends AppCompatActivity implements SearchHi
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        mNutritionViewModel = ViewModelProviders.of(this).get(NutritionViewModel.class);
+        mFoodViewModel = ViewModelProviders.of(this).get(FoodViewModel.class);
 
-        mNutritionViewModel.getAllNutrition().observe(this, nutritions -> {
+        mFoodViewModel.getAllFood().observe(this, nutritions -> {
+            //reverse order to new to old
+            Collections.reverse(nutritions);
             // Update the cached copy of the nutritions in the adapter.
-            adapter.setNutritions(nutritions);
-            mNutritionList = nutritions;
+            adapter.setFoods(nutritions);
+            mFoodList = nutritions;
             if (nutritions.size() == 0) {
                 tvNoHistory.setVisibility(View.VISIBLE);
             }
@@ -58,7 +61,7 @@ public class SearchHistoryActivity extends AppCompatActivity implements SearchHi
     public void onItemClick(int position) {
         Intent nutrition = new Intent(this, NutritionActivity.class);
         nutrition.setAction(Intent.ACTION_SEARCH);
-        nutrition.putExtra(ARG_NAME, mNutritionList.get(position).getName());
+        nutrition.putExtra(ARG_NAME, mFoodList.get(position).getName());
         startActivity(nutrition);
     }
 
@@ -83,7 +86,7 @@ public class SearchHistoryActivity extends AppCompatActivity implements SearchHi
                 break;
             case R.id.action_settings:
                 Log.e(TAG, "onOptionsItemSelected: " + id + " " + R.id.action_settings);
-                mNutritionViewModel.deleteAll();
+                mFoodViewModel.deleteAll();
                 break;
         }
 
